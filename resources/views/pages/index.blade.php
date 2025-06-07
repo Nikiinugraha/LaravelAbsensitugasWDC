@@ -8,12 +8,21 @@
             <h1 class="display-4 fw-bold mb-4">Sistem Absensi Online</h1>
             <p class="lead mb-4">Mudah, Cepat, dan Efisien. Kelola kehadiran dengan lebih baik bersama kami.</p>
             <div class="d-flex gap-3">
+                @auth
                 <a href="{{ route('presence.index') }}" class="btn btn-primary btn-lg px-4">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Kelola Absensi
+                </a>  
+                <a href="#daftar-absensi" class="btn btn-outline-secondary btn-lg px-4">
+                    <i class="bi bi-list-check me-2"></i>Lihat Daftar Absensi
+                </a>
+                @else
+                <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-4">
                     <i class="bi bi-box-arrow-in-right me-2"></i>Masuk Admin
                 </a>
                 <a href="#daftar-absensi" class="btn btn-outline-secondary btn-lg px-4">
                     <i class="bi bi-list-check me-2"></i>Lihat Daftar Absensi
                 </a>
+                @endauth
             </div>
         </div>
         <div class="col-lg-6 d-none d-lg-block">
@@ -79,11 +88,11 @@
                             {{ \Carbon\Carbon::parse($presence->tgl_kegiatan)->translatedFormat('l, d F Y') }}
                         </p>
                         <div class="d-flex gap-2 mb-3">
-                            <a href="{{ route('absen.index', $presence->slug) }}" class="btn btn-outline-primary btn-sm flex-grow-1">
+                            <a href="{{ route('presence.show', $presence->id) }}" class="btn btn-outline-primary btn-sm flex-grow-1">
                                 Isi Absensi
                             </a>
                             <button class="btn btn-outline-secondary btn-sm copy-link" 
-                                    data-url="{{ route('absen.index', $presence->slug) }}"
+                                    data-url="{{ route('presence.show', $presence->id) }}"
                                     title="Salin link absen">
                                 <i class="bi bi-clipboard"></i>
                             </button>
@@ -92,7 +101,7 @@
                             <i class="bi bi-clock me-2"></i>
                             {{ \Carbon\Carbon::parse($presence->tgl_kegiatan)->format('H:i') }} WIB
                         </p>
-                        <a href="{{ route('absen.index', $presence->slug) }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ route('presence.show', $presence->id) }}" class="btn btn-outline-primary w-100">
                             Isi Absensi
                         </a>
                     </div>
